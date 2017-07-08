@@ -65,6 +65,25 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
                 target_move,
                 partner_filter_ids=partner_filter_ids,
                 mode=opening_mode)
+            
+            # In case of moves without partner and initila balance required
+            # It  must remove open move on the first period
+            unallocated = False
+            if partners_init_balances_by_ids and details[None]:
+                unallocated = self._get_partners_totals_account_unallocated(
+                    filter_from,
+                    account_id,
+                    start,
+                    stop,
+                    target_move,
+                    partner_filter_ids=[],
+                    mode=opening_mode)
+                if unallocated:
+                    details[None].update({
+                        'credit': unallocated[None]['credit'],
+                        'debit': unallocated[None]['debit'],
+                         })
+                #if unallocated:
 
             # merge initial balances in partner details
             if partners_init_balances_by_ids.get(account_id):
@@ -147,6 +166,67 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
             for row in res:
                 final_res[row['partner_id']] = row
         return final_res
+
+    def _get_partners_totals_account_unallocated(self, filter_from, account_id,
+                                     start,
+                                     stop, target_move,
+                                     partner_filter_ids=None,
+                                     mode='exclude_opening'):
+        # final_res = defaultdict(dict)
+        final_res = {}
+        move_line_obj = self.pool['account.move.line']
+        # Take the close move to refund
+        refund_credit = refund_debit = 0
+        domain = [('fiscalyear_id', '=', start.fiscalyear_id.id),
+                  ('special', '=', True)]
+        open_period_ids = self.pool['account.period'].search(
+            self.cr, self.uid, domain)
+        domain = [('period_id', 'in', open_period_ids),
+                  ('account_id', '=', account_id)]
+        move_line_ids = move_line_obj.search(self.cr, self.uid, domain)
+        if move_line_ids:
+            for line in move_line_obj.browse(self.cr, self.uid, move_line_ids):
+                if line.debit:
+                    refund_credit += line.debit
+                else:
+                    refund_debit += line.credit
+
+        sql_select = """
+                 SELECT account_move_line.partner_id,
+                        sum(account_move_line.debit) AS debit,
+                        sum(account_move_line.credit) AS credit
+                 FROM account_move_line"""
+        sql_joins = ''
+        sql_where = "WHERE account_move_line.account_id = %(account_id)s \
+                     AND account_move_line.state = 'valid' "
+        method = getattr(self, '_get_query_params_from_' + filter_from + 's')
+        sql_conditions, search_params = method(start, stop, mode=mode)
+        sql_where += sql_conditions
+
+        # whitout partner
+        sql_where += "   AND account_move_line.partner_id \
+                         is null "
+
+        if target_move == 'posted':
+            sql_joins += "INNER JOIN account_move \
+                            ON account_move_line.move_id = account_move.id"
+            sql_where += " AND account_move.state = %(target_move)s"
+            search_params.update({'target_move': target_move})
+
+        sql_groupby = "GROUP BY account_move_line.partner_id"
+
+        search_params.update({'account_id': account_id})
+        query = ' '.join((sql_select, sql_joins, sql_where, sql_groupby))
+
+        self.cursor.execute(query, search_params)
+        res = self.cursor.dictfetchall()
+        if res:
+            for row in res:
+                row['credit'] -= refund_credit
+                row['debit'] -= refund_debit
+                final_res[row['partner_id']] = row
+        return final_res
+    
 
     def _get_filter_type(self, result_selection):
         filter_type = ('payable', 'receivable')

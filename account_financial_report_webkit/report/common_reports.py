@@ -365,6 +365,11 @@ class CommonReportHeaderWebkit(common_report_header):
             if not account_id or not period_ids:
                 raise Exception('Missing account or period_ids')
             try:
+                # Remove the last special periods for initial balance
+                domain = [('id', 'in', period_ids),
+                          ('special', '=', True)]
+                last_special_period_ids = self.pool['account.period'].search(
+                    self.cursor, self.uid, domain, order='id desc', limit=1)
                 self.cursor.execute("SELECT sum(debit) AS debit, "
                                     " sum(credit) AS credit, "
                                     " sum(debit)-sum(credit) AS balance, "
