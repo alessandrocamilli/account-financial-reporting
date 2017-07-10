@@ -82,6 +82,7 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
                     details[None].update({
                         'credit': unallocated[None]['credit'],
                         'debit': unallocated[None]['debit'],
+                        'init_balance': unallocated[None]['init_balance'],
                          })
                 #if unallocated:
 
@@ -89,7 +90,10 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
             if partners_init_balances_by_ids.get(account_id):
                 for partner_id, initial_balances in \
                         partners_init_balances_by_ids[account_id].iteritems():
-                    if initial_balances.get('init_balance'):
+                    if not partner_id and unallocated:
+                        details[partner_id].update(
+                            {'init_balance': unallocated[None]['init_balance']})
+                    elif initial_balances.get('init_balance'):
                         details[partner_id].update(
                             {'init_balance': initial_balances['init_balance']})
 
@@ -176,7 +180,7 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
         final_res = {}
         move_line_obj = self.pool['account.move.line']
         # Take the close move to refund
-        refund_credit = refund_debit = 0
+        refund_credit = refund_debit = init_balance = 0
         domain = [('fiscalyear_id', '=', start.fiscalyear_id.id),
                   ('special', '=', True)]
         open_period_ids = self.pool['account.period'].search(
@@ -188,8 +192,10 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
             for line in move_line_obj.browse(self.cr, self.uid, move_line_ids):
                 if line.debit:
                     refund_credit += line.debit
+                    init_balance += line.debit
                 else:
                     refund_debit += line.credit
+                    init_balance -= line.credit
 
         sql_select = """
                  SELECT account_move_line.partner_id,
@@ -222,6 +228,9 @@ class CommonPartnerBalanceReportHeaderWebkit(CommonBalanceReportHeaderWebkit,
         res = self.cursor.dictfetchall()
         if res:
             for row in res:
+                if not 'init_balance' in row:
+                    row['init_balance'] = 0
+                row['init_balance'] -= refund_credit
                 row['credit'] -= refund_credit
                 row['debit'] -= refund_debit
                 final_res[row['partner_id']] = row
