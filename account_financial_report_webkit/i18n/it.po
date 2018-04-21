@@ -8,14 +8,15 @@ msgstr ""
 "Project-Id-Version: account-financial-report\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-05-07 07:02+0000\n"
-"PO-Revision-Date: 2014-02-12 15:52+0000\n"
+"PO-Revision-Date: 2018-04-21 10:54+0200\n"
 "Last-Translator: Andrea Cometa <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2014-06-19 06:33+0000\n"
-"X-Generator: Launchpad (build 17048)\n"
+"X-Generator: Poedit 2.0.6\n"
+"Language: it\n"
 
 #. module: account_financial_report_webkit
 #: field:account.common.balance.report,account_ids:0
@@ -32,8 +33,7 @@ msgid "Please set a valid time filter"
 msgstr "Si prega di impostare un filtro valido per la data"
 
 #. module: account_financial_report_webkit
-#: view:general.ledger.webkit:0
-#: view:open.invoices.webkit:0
+#: view:general.ledger.webkit:0 view:open.invoices.webkit:0
 #: view:partners.ledger.webkit:0
 msgid "Layout Options"
 msgstr "Opzioni layout"
@@ -158,10 +158,8 @@ msgid "Due Date"
 msgstr "Data scadenza"
 
 #. module: account_financial_report_webkit
-#: view:general.ledger.webkit:0
-#: view:open.invoices.webkit:0
-#: view:partner.balance.webkit:0
-#: view:partners.ledger.webkit:0
+#: view:general.ledger.webkit:0 view:open.invoices.webkit:0
+#: view:partner.balance.webkit:0 view:partners.ledger.webkit:0
 #: view:trial.balance.webkit:0
 msgid "Print only"
 msgstr "Solo stampa"
@@ -288,8 +286,7 @@ msgstr "Stampa Libro Mastro"
 
 #. module: account_financial_report_webkit
 #: constraint:open.invoices.webkit:0
-msgid ""
-"Clearance date must be the very last date of the last period or later."
+msgid "Clearance date must be the very last date of the last period or later."
 msgstr ""
 "La data di liquidazione deve essere l'ultima data dell'ultimo periodo o del "
 "successivo."
@@ -318,10 +315,8 @@ msgstr "Selezionare il Piano dei Conti"
 
 #. module: account_financial_report_webkit
 #: field:account.common.balance.report,filter:0
-#: field:general.ledger.webkit,filter:0
-#: field:open.invoices.webkit,filter:0
-#: field:partner.balance.webkit,filter:0
-#: field:partners.ledger.webkit,filter:0
+#: field:general.ledger.webkit,filter:0 field:open.invoices.webkit,filter:0
+#: field:partner.balance.webkit,filter:0 field:partners.ledger.webkit,filter:0
 #: field:trial.balance.webkit,filter:0
 msgid "Filter by"
 msgstr "Filtra per"
@@ -367,7 +362,7 @@ msgstr ""
 #: report:addons/account_financial_report_webkit/report/templates/account_report_profit_loss.mako:111
 #: report:addons/account_financial_report_webkit/report/templates/account_report_trial_balance.mako:126
 msgid "Debit"
-msgstr "Debito"
+msgstr "Dare"
 
 #. module: account_financial_report_webkit
 #: code:addons/account_financial_report_webkit/report/webkit_parser_header_fix.py:171
@@ -376,10 +371,8 @@ msgid "Please set a header in company settings"
 msgstr "Prego impostare una intestazione nei settaggi dell'azienda"
 
 #. module: account_financial_report_webkit
-#: view:general.ledger.webkit:0
-#: view:open.invoices.webkit:0
-#: view:partner.balance.webkit:0
-#: view:partners.ledger.webkit:0
+#: view:general.ledger.webkit:0 view:open.invoices.webkit:0
+#: view:partner.balance.webkit:0 view:partners.ledger.webkit:0
 #: view:trial.balance.webkit:0
 msgid "Time Filters"
 msgstr "Filtri temporali"
@@ -561,10 +554,8 @@ msgstr "Con movimenti"
 
 #. module: account_financial_report_webkit
 #: constraint:account.common.balance.report:0
-#: constraint:general.ledger.webkit:0
-#: constraint:open.invoices.webkit:0
-#: constraint:partner.balance.webkit:0
-#: constraint:partners.ledger.webkit:0
+#: constraint:general.ledger.webkit:0 constraint:open.invoices.webkit:0
+#: constraint:partner.balance.webkit:0 constraint:partners.ledger.webkit:0
 #: constraint:trial.balance.webkit:0
 msgid ""
 "The fiscalyear, periods or chart of account chosen have to belong to the "
@@ -821,10 +812,8 @@ msgstr "Note Interne"
 
 #. module: account_financial_report_webkit
 #: constraint:account.common.balance.report:0
-#: constraint:general.ledger.webkit:0
-#: constraint:open.invoices.webkit:0
-#: constraint:partner.balance.webkit:0
-#: constraint:partners.ledger.webkit:0
+#: constraint:general.ledger.webkit:0 constraint:open.invoices.webkit:0
+#: constraint:partner.balance.webkit:0 constraint:partners.ledger.webkit:0
 #: constraint:trial.balance.webkit:0
 msgid ""
 "When no Fiscal year is selected, you must choose to filter by periods or by "
@@ -894,8 +883,7 @@ msgstr "Lasciare vuoto per tutti gli anni fiscali aperti"
 
 #. module: account_financial_report_webkit
 #: help:account.move.line,last_rec_date:0
-msgid ""
-"the date of the last reconciliation (full or partial) account move line"
+msgid "the date of the last reconciliation (full or partial) account move line"
 msgstr ""
 
 #. module: account_financial_report_webkit
@@ -906,7 +894,7 @@ msgstr ""
 #: report:addons/account_financial_report_webkit/report/templates/account_report_profit_loss.mako:113
 #: report:addons/account_financial_report_webkit/report/templates/account_report_trial_balance.mako:128
 msgid "Credit"
-msgstr "Credito"
+msgstr "Avere"
 
 #. module: account_financial_report_webkit
 #: selection:account.common.balance.report,filter:0
@@ -946,10 +934,8 @@ msgstr "% Differenza"
 
 #. module: account_financial_report_webkit
 #: help:account.common.balance.report,filter:0
-#: help:open.invoices.webkit,filter:0
-#: help:partner.balance.webkit,filter:0
-#: help:partners.ledger.webkit,filter:0
-#: help:trial.balance.webkit,filter:0
+#: help:open.invoices.webkit,filter:0 help:partner.balance.webkit,filter:0
+#: help:partners.ledger.webkit,filter:0 help:trial.balance.webkit,filter:0
 msgid ""
 "Filter by date : no opening balance will be displayed. (opening balance can "
 "only be calculated based on period to be correct)."
@@ -964,8 +950,8 @@ msgid ""
 msgstr ""
 "Errore di Configurazione! \n"
 "Non è possibile selezionare un tipo di conto con un metodo di posticipazione "
-"diverso da \"Non riconciliate\" per i conti con tipo interno "
-"\"Debito/Credito\"! "
+"diverso da \"Non riconciliate\" per i conti con tipo interno \"Debito/Credito"
+"\"! "
 
 #. module: account_financial_report_webkit
 #: code:addons/account_financial_report_webkit/report/partner_balance.py:47
@@ -982,8 +968,7 @@ msgid "Centralized Entries"
 msgstr "Voci centralizzate"
 
 #. module: account_financial_report_webkit
-#: view:general.ledger.webkit:0
-#: view:partner.balance.webkit:0
+#: view:general.ledger.webkit:0 view:partner.balance.webkit:0
 #: view:trial.balance.webkit:0
 msgid "Accounts Filters"
 msgstr "Filtri sui Conti"
@@ -1180,8 +1165,7 @@ msgstr "Da:"
 #: field:account.common.balance.report,comp1_date_to:0
 #: field:account.common.balance.report,comp2_date_to:0
 #: field:account.common.balance.report,date_to:0
-#: field:general.ledger.webkit,date_to:0
-#: field:open.invoices.webkit,date_to:0
+#: field:general.ledger.webkit,date_to:0 field:open.invoices.webkit,date_to:0
 #: field:partner.balance.webkit,comp0_date_to:0
 #: field:partner.balance.webkit,comp1_date_to:0
 #: field:partner.balance.webkit,comp2_date_to:0
@@ -1224,8 +1208,7 @@ msgid "Partner Ledger Report"
 msgstr "Stampa Mastro del Partner"
 
 #. module: account_financial_report_webkit
-#: view:open.invoices.webkit:0
-#: view:partner.balance.webkit:0
+#: view:open.invoices.webkit:0 view:partner.balance.webkit:0
 #: view:partners.ledger.webkit:0
 msgid "Partners Filters"
 msgstr "Filtri sui Partner"
